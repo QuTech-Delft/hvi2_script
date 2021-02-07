@@ -33,7 +33,7 @@ class HviSystem:
 
         # Assign the defined PXI trigger resources (just allocate all...)
         self.kt_system.sync_resources = [
-#                TriggerResourceId.PXI_TRIGGER0,
+                TriggerResourceId.PXI_TRIGGER0,
                 TriggerResourceId.PXI_TRIGGER1,
                 TriggerResourceId.PXI_TRIGGER2,
                 TriggerResourceId.PXI_TRIGGER3,
