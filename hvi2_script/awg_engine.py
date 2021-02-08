@@ -16,6 +16,7 @@ class HviAwgEngine(HviEngine):
         self.trigger_actions = [self._get_action(f'awg{i}_trigger') for i in range(1,5)]
         self.stop_actions = [self._get_action(f'awg{i}_stop') for i in range(1,5)]
         self.fpga_events = [Event(self.alias, self._get_event(f'fpga_user_{i}')) for i in range(8)]
+        self.queue_flush_actions = [self._get_action(f'awg{i}_queue_flush') for i in range(1,5)]
 
     def _get_name(self, awg):
         return f'AWG{awg.getChassis()}-{awg.getSlot()}'
@@ -59,6 +60,17 @@ class AwgSequenceBuilder(ModuleSequenceBuilder):
         actions = [self.engine.stop_actions[i-1] for i in channels]
         self._add_actions(f'awg_stop {channels}', actions,
                           InstructionTiming(1, 120))
+        return self._current_statement
+
+    def queue_flush(self, channels=[1,2,3,4]):
+        '''
+        Adds awg_flush action to the sequence.
+        Args:
+            channels (list of int): channels to flush.
+        '''
+        actions = [self.engine.queue_flush_actions[i-1] for i in channels]
+        self._add_actions(f'awg_flush {channels}', actions,
+                          InstructionTiming(1, 119))
         return self._current_statement
 
     def queue(self, channel, waveform_number, cycles=1, wave_start_delay=0, prescaler=0, trigger_mode=1):
