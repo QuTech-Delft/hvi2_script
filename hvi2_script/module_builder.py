@@ -26,9 +26,9 @@ class ModuleSequenceBuilder(SequenceBuilder):
     def _add_while(self, kt_condition, n_conditions, text):
         timing = InstructionTiming(3+n_conditions,
                                    start_latency=5+n_conditions,
-                                   entry_latency=2,
-                                   end_latency=6+n_conditions,
-                                   iteration_overhead=5+n_conditions)
+                                   entry_latency=9+n_conditions,
+                                   end_latency=9+n_conditions,
+                                   iteration_overhead=9+n_conditions)
         min_start_delay = calculate_start_delay(self.sequence.min_start_delay_next, timing)
         start_delay = min_start_delay
         line = self.line

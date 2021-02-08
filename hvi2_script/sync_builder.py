@@ -24,10 +24,12 @@ class SyncSequenceBuilder(SequenceBuilder):
         return SequenceBlock(self, None, self._main)
 
     def _add_while(self, kt_condition, n_conditions, text):
+        # always use 2 for end latency of last statement. Add empty SyncMultiSequenceBlock to realize this.
+        end_latency_last_statement = 2
         timing = InstructionTiming(3+n_conditions,
                                    start_latency=5+n_conditions+self.propagation_delay_ticks,
-                                   entry_latency=7+self.propagation_delay_ticks,
-                                   end_latency=11+n_conditions+self.propagation_delay_ticks,
+                                   entry_latency=14+self.propagation_delay_ticks+end_latency_last_statement,
+                                   end_latency=14+n_conditions+self.propagation_delay_ticks+end_latency_last_statement,
                                    iteration_overhead=5+n_conditions)
         min_start_delay = calculate_start_delay(self.sequence.min_start_delay_next, timing)
         start_delay = min_start_delay
