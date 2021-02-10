@@ -174,6 +174,7 @@ class HviSequencer:
 
     def compile(self):
         try:
+            print('Compiling HVI script')
             start = time.perf_counter()
             kt_hvi = self.kt_sequencer.compile()
             duration = time.perf_counter() - start
