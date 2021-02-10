@@ -71,7 +71,7 @@ class ModuleSequenceBuilder(SequenceBuilder):
 
     def _wait_register(self, register):
         text = f'wait {register}'
-        timing = InstructionTiming(0, start_latency=2)
+        timing = InstructionTiming(1, start_latency=1)
         statement = self.add_statement(text, timing)
         statement.non_deterministic = str(register)
         self.kt_sequence.add_wait_time(statement.alias, statement.start_delay, kt_operand(register))
