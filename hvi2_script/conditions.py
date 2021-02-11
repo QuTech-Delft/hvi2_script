@@ -14,15 +14,15 @@ class HviCondition:
     '''
     def __and__(self, rhs):
         print(f'{self.kt_condition} AND {rhs}')
-        kt_condition = Condition.And([self.kt_condition, rhs.kt_condition])
+        kt_condition = Condition.logical_and([self.kt_condition, rhs.kt_condition])
         return ConditionalExpression(self, 'AND', rhs, kt_condition)
 
     def __or__(self, rhs):
-        kt_condition = Condition.Or([self.kt_condition, rhs.kt_condition])
+        kt_condition = Condition.logical_or([self.kt_condition, rhs.kt_condition])
         return ConditionalExpression(self, 'OR', rhs, kt_condition)
 
     def __invert__(self):
-        kt_condition = Condition.Not(self.kt_condition)
+        kt_condition = Condition.logical_not(self.kt_condition)
         return UnaryConditionalExpression('NOT', self, kt_condition)
 
 
