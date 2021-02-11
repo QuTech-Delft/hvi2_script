@@ -200,6 +200,7 @@ class HviSequencer:
                 error_count += 1
             for resource in status.sync_resources:
                 logging.info(f'-- {resource}')
+            logging.error(f"Compilation failed:\n" + self.describe(print_errors=True))
             raise
 
     def describe(self, **kwargs):
