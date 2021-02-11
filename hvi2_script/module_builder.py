@@ -80,7 +80,13 @@ class ModuleSequenceBuilder(SequenceBuilder):
         # delay statement is empty statement with start_delay
         text = f'wait {time} ns'
         timing = InstructionTiming(1)
-        statement = self.add_statement(text, timing, start_delay=time)
+        min_start_delay = calculate_start_delay(self.sequence.min_start_delay_next, timing)
+        if time < min_start_delay:
+            start_delay = min_start_delay
+            text = f'wait {time} ns (extended to {min_start_delay})'
+        else:
+            start_delay = time
+        statement = self.add_statement(text, timing, start_delay=start_delay)
         self.kt_sequence.add_delay(statement.alias, statement.start_delay)
 
     def wait(self, time):
