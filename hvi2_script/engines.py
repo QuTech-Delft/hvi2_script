@@ -3,6 +3,9 @@
 """
 import logging
 
+from keysight_hvi import Direction, Polarity, TriggerMode, SyncMode
+
+
 class HviEngine:
     '''
     '''
@@ -52,6 +55,16 @@ class HviEngine:
         events = self.module.hvi.events
         event_id = getattr(events, event_name)
         return self.kt_engine.events.add(event_id, alias)
+
+    def define_trigger(self, number, direction):
+        trigger = self.kt_engine.triggers.add(number, f'Trigger{number}')
+        trigger.config.direction = direction #Direction.OUTPUT
+        trigger.config.polarity = Polarity.ACTIVE_LOW
+        trigger.config.hw_routing_delay = 0
+        trigger.config.trigger_mode = TriggerMode.LEVEL
+        trigger.config.pulse_length = 0
+        trigger.config.sync_mode = SyncMode.IMMEDIATE
+        return trigger
 
     def _get_name(self, module):
         ''' must be overridden '''

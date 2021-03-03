@@ -243,3 +243,13 @@ class ModuleSequenceBuilder(SequenceBuilder):
                         'destination':destination
                         }
                 )
+
+    def write_trigger(self, trigger, value:int, text=None):
+        if text is None:
+            text = f'trigger {trigger} {value}'
+        self._add_hvi_instruction(
+                text,
+                'trigger_write',
+                InstructionTiming(1),
+                params={'trigger':trigger, 'value':value, 'sync_mode':SyncMode.IMMEDIATE}
+                )
