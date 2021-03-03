@@ -13,7 +13,6 @@ class HviCondition:
     The condition clas binds the python  bitwise and '&', or '|' and not '~' operators to HVI conditions.
     '''
     def __and__(self, rhs):
-        print(f'{self.kt_condition} AND {rhs}')
         kt_condition = Condition.logical_and([self.kt_condition, rhs.kt_condition])
         return ConditionalExpression(self, 'AND', rhs, kt_condition)
 
