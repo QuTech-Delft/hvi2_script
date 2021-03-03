@@ -17,6 +17,7 @@ class HviAwgEngine(HviEngine):
         self.stop_actions = [self._get_action(f'awg{i}_stop') for i in range(1,5)]
         self.fpga_events = [Event(self.alias, self._get_event(f'fpga_user_{i}')) for i in range(8)]
         self.queue_flush_actions = [self._get_action(f'awg{i}_queue_flush') for i in range(1,5)]
+        self.reset_phase_actions = [self._get_action(f'ch{i}_reset_phase') for i in range(1,5)]
 
     def _get_name(self, awg):
         return f'AWG{awg.getChassis()}-{awg.getSlot()}'
@@ -59,6 +60,12 @@ class AwgSequenceBuilder(ModuleSequenceBuilder):
         '''
         actions = [self.engine.stop_actions[i-1] for i in channels]
         self._add_actions(f'awg_stop {channels}', actions,
+                          InstructionTiming(1, 120))
+        return self._current_statement
+
+    def reset_phase(self, channels=[1,2,3,4]):
+        actions = [self.engine.reset_phase_actions[i-1] for i in channels]
+        self._add_actions(f'reset_phase {channels}', actions,
                           InstructionTiming(1, 120))
         return self._current_statement
 
