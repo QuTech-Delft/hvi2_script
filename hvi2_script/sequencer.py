@@ -92,8 +92,11 @@ class HviSequencer:
     '''
 
     def __init__(self, system:HviSystem, alias:str='Sequencer'):
+        print('Init HVI sequence')
+        logging.info(f'Init HVI sequence')
         self.system = system
         self.kt_sequencer = Sequencer(alias, system.kt_system)
+        logging.info(f'Sequence initialized')
         self.scopes = self.kt_sequencer.sync_sequence.scopes
         self.engine_registers = {engine.alias:{} for engine in self.system.engines}
         self.module_builders = {engine.alias:engine.create_sequence_builder(self, chr(ord('A')+i))
@@ -175,11 +178,12 @@ class HviSequencer:
     def compile(self):
         try:
             print('Compiling HVI script')
+            logging.info(f'Compiling HVI script')
             start = time.perf_counter()
             kt_hvi = self.kt_sequencer.compile()
             duration = time.perf_counter() - start
             status = kt_hvi.compile_status
-            logging.info(f'compiler: {status.to_string()}')
+#            logging.info(f'compiler: {status.to_string()}')
             logging.info(f'compiled in {status.elapsed_time.total_seconds():6.3f} s (actually: {duration:6.3f} s)')
             for resource in status.sync_resources:
                 logging.info(f'-- {resource}')
