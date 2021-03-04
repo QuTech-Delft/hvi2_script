@@ -185,6 +185,7 @@ class HviSequencer:
             status = kt_hvi.compile_status
 #            logging.info(f'compiler: {status.to_string()}')
             logging.info(f'compiled in {status.elapsed_time.total_seconds():6.3f} s (actually: {duration:6.3f} s)')
+            print(f'HVI Resources: {[str(s).rsplit(".",1)[-1] for s in status.sync_resources]}')
             for resource in status.sync_resources:
                 logging.info(f'-- {resource}')
             return HviExec(kt_hvi, self)
