@@ -95,7 +95,7 @@ class HviExec:
         '''
         Returns a dictionary with the value of the register per module.
         '''
-        return {engine.alias: self.read_register(register) for engine, register in module_register.registers.items()}
+        return {engine_alias: self.read_register(register) for engine_alias, register in module_register.registers.items()}
 
 #    def read_one(self, module=None, module_alias=None):
 #        '''

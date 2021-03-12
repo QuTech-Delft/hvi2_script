@@ -163,7 +163,7 @@ class HviSequencer:
             module_type (str): type of the module to add the register to. 'awg' or 'digitizer'
         '''
         engines = self.system.get_engines(module_aliases=module_aliases, modules=modules, module_type=module_type)
-        return ModuleRegister({engine: self._add_register(engine.alias, register_alias, initial_value) for engine in engines})
+        return ModuleRegister({engine.alias: self._add_register(engine.alias, register_alias, initial_value) for engine in engines})
 
     def registers(self, engine_alias=None):
         if engine_alias is None:
