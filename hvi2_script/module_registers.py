@@ -16,3 +16,5 @@ class ModuleRegister:
     def __init__(self, register_dict):
         self.registers = register_dict
 
+    def __repr__(self):
+        return f'{self.registers}'
