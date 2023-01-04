@@ -42,6 +42,9 @@ class ModuleSequenceBuilder(SequenceBuilder):
         return SequenceBlock(self, statement, loop_seq)
 
     def _add_actions(self, alias, action_list, timing, start_delay=None):
+        # lookup actions in sequence (ActionView object instead of ActionDefinition)
+        actions = self.kt_sequence.engine.actions
+        action_list = [actions[action.name] for action in action_list]
         action_execute = self.kt_sequence.instruction_set.action_execute
         instruction = self._add_instruction(start_delay, alias, action_execute, timing)
         instruction.set_parameter(action_execute.action.id, action_list)

@@ -25,6 +25,8 @@ class HviSystem:
             chassis_number (int or None): number of the chassis. Use auto-detect if None.
             simulated (bool): if True uses simulated HVI hardware.
         '''
+        print('Init HVI System.... (takes a while)', flush=True)
+        logging.info('Init HVI System')
         self.engines = []
 
         # create instance of hvi
@@ -65,6 +67,7 @@ class HviSystem:
                 logging.debug(f'chassis: {chassis.model} slots:{chassis.first_slot}..{chassis.last_slot}')
 
         self._master_engine = None
+        logging.info('HVI System initialized.')
 
     def _add_engine(self, engine):
         self.engines.append(engine)
