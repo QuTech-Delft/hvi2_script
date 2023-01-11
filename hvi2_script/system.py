@@ -1,4 +1,5 @@
 import logging
+import time
 
 from keysight_hvi import SystemDefinition, TriggerResourceId
 
@@ -26,6 +27,8 @@ class HviSystem:
             simulated (bool): if True uses simulated HVI hardware.
         '''
         print('Init HVI System.... (takes a while)', flush=True)
+        # add minimal sleep to print the message now.
+        time.sleep(0.001)
         logging.info('Init HVI System')
         self.engines = []
 
